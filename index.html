@@ -9,10 +9,22 @@
 <body>
     <header>
         <ul>
-            <li><button id="sortBtn">Let the sorting comence</button></li>
+            <li>
+                <label for="sortingAlgorithms"></label>
+                <select name="sortingAlgorithms" id="sortingAlgorithmsSelection">
+                    <option value="bubbleSort">Bubble Sort</option>
+                    <option value="selectionSort">Selection Sort</option>
+                </select>
+                <button id="sortBtn">Let the sorting comence</button>
+            </li>
             <li><button id="shuffleBtn">Shuffle me timbers</button></li>
-            <li><input type="number" name="" id="numberOfElementsInput" value="20"></li>
-            <li><button id="changeNumberOfElementsBtn">Change the number of elements</button></li>
+            <li>
+                <div>
+                    <button id="changeNumberOfElementsBtn">Change the number of elements</button>
+                    <input type="number" name="" id="numberOfElementsInput" value="20">
+                </div>
+            </li>
+            <li></li>
         </ul>
     </header>
     <div id="algoBox"></div>
