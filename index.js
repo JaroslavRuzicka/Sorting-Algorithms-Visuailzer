@@ -1,3 +1,13 @@
+//Sorting algorithms to implement:
+//Buble sort: DONE
+//Insertion sort
+//Selection sort
+//Merge sort
+//Quick Sort
+//Heap sort
+//Radix sort
+//Shell sort -- maybe
+
 /*******************Global Variables **************************/
 let elementsOrdering = []
 
@@ -10,7 +20,6 @@ let parentElement = document.getElementById("algoBox")
 /*******************Functions  *******************************/
 
 
-//finish function that is gonna sanitize input and only allow whole numbers between 5 and 100
 //shuffle while soritng breaks algo
 
 
@@ -20,7 +29,7 @@ function populateSortingBox(){
     deleteAllElements()
     
     //sanitizing input
-    if(Number.isInteger(tempNumber) && tempNumber > 0){
+    if(Number.isInteger(tempNumber) && tempNumber > 0 && tempNumber < 100){
         numberOfChildren =  tempNumber
     } else{
         document.querySelector("#numberOfElementsInput").value = 20
@@ -94,7 +103,62 @@ function shuffleElements(){
     //console.log(elementsOrdering);
 }
 
-function selectionSort(lengthOfLoop){
+function selectionSort(startingIndex){
+    // shuffleBtn.disabled = true
+    // generateElementsBtn.disabled = true
+
+    i = startingIndex
+    let smallestElement = elementsOrdering[i]
+    let smallestElementPosition = i
+
+    function loop(i){
+        let temp2 = elementsOrdering[i]
+        
+        smallestElement.element.style.backgroundColor = "lime"
+        temp2.element.style.backgroundColor = "lime"
+
+        setTimeout(function(){
+            
+            let height1 = Number(smallestElement.height.slice(0, -2))
+            let height2 = Number(temp2.height.slice(0, -2))
+
+            
+            temp2.element.style.backgroundColor = "red"
+            
+            if(height1 > height2){
+                smallestElement.element.style.backgroundColor = "red"
+                smallestElement = temp2
+                smallestElementPosition = i
+                smallestElement.element.style.backgroundColor = "lime"
+            }
+
+            if(i < elementsOrdering.length - 1){
+                loop(i + 1)
+            }else{
+                let left1 = smallestElement.element.style.left
+                let left2 = elementsOrdering[startingIndex].element.style.left
+                
+                smallestElement.element.style.left = left2
+                elementsOrdering[startingIndex].element.style.left = left1
+
+                elementsOrdering[smallestElementPosition] = elementsOrdering[startingIndex]
+                elementsOrdering[startingIndex] = smallestElement
+                setTimeout(function(){
+                    smallestElement.element.style.backgroundColor = "red"
+
+                },150)
+               if(startingIndex < elementsOrdering.length - 2){
+                   selectionSort(startingIndex + 1)
+               }else{
+                    setTimeout(function(){
+                        smallestElement.element.style.backgroundColor = "red"
+                        temp2.element.style.backgroundColor = "red"
+                    },150)
+               }
+            }
+        },10)
+    }
+    loop(i + 1)
 
 }
 
@@ -155,14 +219,32 @@ function bubleSort(lengthOfLoop){
     loop()    //console.log(elementsOrdering);
 }
 
+function callSortingAlgorithm(){
+    let selection = document.querySelector("#sortingAlgorithmsSelection").value
+    switch (selection){
+        case "bubbleSort":
+            let tempNumber = Number(document.querySelector("#numberOfElementsInput").value)    
+            bubleSort(tempNumber)
+            break
+        case "selectionSort":
+            selectionSort(0)
+            break
+        default:
+            break
+    }
+}
 
 //*******************Funciton Calls *******************************/
 populateSortingBox()
 
 
 /**********************Event Listeners ***************************/
+let tempNumber = Number(document.querySelector("#numberOfElementsInput").value)    
+
 let btn = document.querySelector("#sortBtn")
-btn.addEventListener("click", function(){bubleSort(elementsOrdering.length)})
+// btn.addEventListener("click", function(){bubleSort(elementsOrdering.length)})
+// btn.addEventListener("click", function(){bubleSort(tempNumber)})
+btn.addEventListener("click", callSortingAlgorithm)
 
 let shuffleBtn = document.querySelector("#shuffleBtn")
 shuffleBtn.addEventListener("click", shuffleElements)
