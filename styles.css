@@ -28,7 +28,7 @@ header{
     position: absolute;
     
     bottom: 0;
-    transition: left .2s;
+    transition: left .1s;
 }
 
 button{

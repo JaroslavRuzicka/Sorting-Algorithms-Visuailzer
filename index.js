@@ -240,7 +240,18 @@ function insertionSort(startingIndex){
             
             elementsOrdering[i + 1] = temp
             elementsOrdering[i + 1].element.style.left = `${100 / elementsOrdering.length * (i + 1)}%`
-            prev.element.style.backgroundColor = "red"
+            setTimeout(() => {
+                prev.element.style.backgroundColor = "red"
+            }, 20);
+
+            if(startingIndex < elementsOrdering.length - 2){
+                setTimeout(() => {
+                    insertionSort(startingIndex + 1)
+                }, 20);
+            }else{
+                enableBtns()
+        
+            }
             return
         }
         if(i == 0){
@@ -255,21 +266,23 @@ function insertionSort(startingIndex){
                 prev.element.style.backgroundColor = "red"
                 
                 sort(i - 1)
-            }, 10);
+            },20);
+        }else{
+            if(startingIndex < elementsOrdering.length - 2){
+                setTimeout(() => {
+                    insertionSort(startingIndex + 1)
+                }, 20);
+            }else{
+                enableBtns()
+        
+            }
         }
         
     }
 
     sort(startingIndex)
 
-    if(startingIndex < elementsOrdering.length - 2){
-        setTimeout(() => {
-            insertionSort(startingIndex + 1)
-        }, 200);
-    }else{
-        enableBtns()
 
-    }
 
 }
 
