@@ -1,7 +1,7 @@
 //Sorting algorithms to implement:
-//Buble sort: DONE
-//Insertion sort
-//Selection sort
+//Buble sort: Done
+//Insertion sort: Done
+//Selection sort: Done
 //Merge sort
 //Quick Sort
 //Heap sort
@@ -86,6 +86,8 @@ function shuffledArray(numOfElements) {
 }
 
 function shuffleElements(){
+    
+    elementsOrdering = []
     let numberOfChildren = elements.length
     let spacing = 100 / numberOfChildren
     let shuffledArrayList = shuffledArray(numberOfChildren)
@@ -119,8 +121,8 @@ function selectionSort(startingIndex){
 
         setTimeout(function(){
             
-            let height1 = Number(smallestElement.height.slice(0, -2))
-            let height2 = Number(temp2.height.slice(0, -2))
+            let height1 = getHeightOfElement(smallestElement)
+            let height2 = getHeightOfElement(temp2)
 
             
             temp2.element.style.backgroundColor = "red"
@@ -150,6 +152,7 @@ function selectionSort(startingIndex){
                if(startingIndex < elementsOrdering.length - 2){
                    selectionSort(startingIndex + 1)
                }else{
+                    enableBtns()
                     setTimeout(function(){
                         smallestElement.element.style.backgroundColor = "red"
                         temp2.element.style.backgroundColor = "red"
@@ -162,11 +165,7 @@ function selectionSort(startingIndex){
 
 }
 
-function bubleSort(lengthOfLoop){
-
-    shuffleBtn.disabled = true
-    generateElementsBtn.disabled = true
-    
+function bubleSort(lengthOfLoop){ 
     let lengthOfLoopTemp = lengthOfLoop
     let numOfSorts = 0
 
@@ -180,8 +179,8 @@ function bubleSort(lengthOfLoop){
 
         setTimeout( function() {
 
-            let height1 = Number(temp1.height.slice(0, -2))
-            let height2 = Number(temp2.height.slice(0, -2))
+            let height1 = getHeightOfElement(temp1)
+            let height2 = getHeightOfElement(temp2)
 
             temp1.element.style.backgroundColor = "red"
             temp2.element.style.backgroundColor = "red"
@@ -203,8 +202,7 @@ function bubleSort(lengthOfLoop){
                 loop()
             }else{
                 if(numOfSorts === 0){
-                    generateElementsBtn.disabled = false
-                    shuffleBtn.disabled = false
+                    enableBtns()
                     return
                 }else{
                     if(lengthOfLoopTemp > 1){
@@ -219,8 +217,66 @@ function bubleSort(lengthOfLoop){
     loop()    //console.log(elementsOrdering);
 }
 
+function insertionSort(startingIndex){
+    let temp = elementsOrdering[startingIndex + 1]
+
+    //let currentLeft = temp.element.style.left
+    
+    let tempHeight =getHeightOfElement(temp)
+
+    function sort(i){
+        let prev = elementsOrdering[i]
+        prev.element.style.backgroundColor = "lime"
+
+        let prevHeight = getHeightOfElement(prev)
+        if(prevHeight > tempHeight){
+            //let tempLeft = elementsOrdering[i + 1].element.style.left
+            //currentLeft = prev.element.style.left
+    
+            elementsOrdering[i + 1] = prev
+            elementsOrdering[i + 1].element.style.left = `${100 / elementsOrdering.length * (i + 1)}%`
+        }
+        else{
+            
+            elementsOrdering[i + 1] = temp
+            elementsOrdering[i + 1].element.style.left = `${100 / elementsOrdering.length * (i + 1)}%`
+            prev.element.style.backgroundColor = "red"
+            return
+        }
+        if(i == 0){
+            prev.element.style.backgroundColor = "red"
+            elementsOrdering[i] = temp
+            elementsOrdering[i].element.style.left = `${100 / elementsOrdering.length * (i)}%`
+        }
+
+        
+        if(i > 0){
+            setTimeout(() => {
+                prev.element.style.backgroundColor = "red"
+                
+                sort(i - 1)
+            }, 10);
+        }
+        
+    }
+
+    sort(startingIndex)
+
+    if(startingIndex < elementsOrdering.length - 2){
+        setTimeout(() => {
+            insertionSort(startingIndex + 1)
+        }, 200);
+    }else{
+        enableBtns()
+
+    }
+
+}
+
+
 function callSortingAlgorithm(){
     let selection = document.querySelector("#sortingAlgorithmsSelection").value
+    disabledBtns()
     switch (selection){
         case "bubbleSort":
             let tempNumber = Number(document.querySelector("#numberOfElementsInput").value)    
@@ -229,9 +285,28 @@ function callSortingAlgorithm(){
         case "selectionSort":
             selectionSort(0)
             break
+        case "insertionSort":
+            insertionSort(0)
+            break
         default:
             break
     }
+}
+
+function disabledBtns(){
+    btn.disabled = true
+    shuffleBtn.disabled = true
+    generateElementsBtn.disabled = true
+}
+
+function enableBtns(){
+    generateElementsBtn.disabled = false
+    shuffleBtn.disabled = false 
+    btn.disabled = false
+}
+
+function getHeightOfElement(elementHeight){
+    return Number(elementHeight.height.slice(0, -2))
 }
 
 //*******************Funciton Calls *******************************/
