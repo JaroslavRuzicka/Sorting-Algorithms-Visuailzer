@@ -10,6 +10,7 @@
 
 /*******************Global Variables **************************/
 let elementsOrdering = []
+let speedOfSorting = 20
 
 
 /*******************DOM Selectors *****************************/
@@ -148,7 +149,7 @@ function selectionSort(startingIndex){
                 setTimeout(function(){
                     smallestElement.element.style.backgroundColor = "red"
 
-                },150)
+                },speedOfSorting)
                if(startingIndex < elementsOrdering.length - 2){
                    selectionSort(startingIndex + 1)
                }else{
@@ -156,10 +157,10 @@ function selectionSort(startingIndex){
                     setTimeout(function(){
                         smallestElement.element.style.backgroundColor = "red"
                         temp2.element.style.backgroundColor = "red"
-                    },150)
+                    },speedOfSorting)
                }
             }
-        },10)
+        },speedOfSorting)
     }
     loop(i + 1)
 
@@ -212,7 +213,7 @@ function bubleSort(lengthOfLoop){
                 }
             }
             
-        }, 10)
+        }, speedOfSorting)
     }
     loop()    //console.log(elementsOrdering);
 }
@@ -242,12 +243,12 @@ function insertionSort(startingIndex){
             elementsOrdering[i + 1].element.style.left = `${100 / elementsOrdering.length * (i + 1)}%`
             setTimeout(() => {
                 prev.element.style.backgroundColor = "red"
-            }, 20);
+            }, speedOfSorting);
 
             if(startingIndex < elementsOrdering.length - 2){
                 setTimeout(() => {
                     insertionSort(startingIndex + 1)
-                }, 20);
+                }, speedOfSorting);
             }else{
                 enableBtns()
         
@@ -266,12 +267,12 @@ function insertionSort(startingIndex){
                 prev.element.style.backgroundColor = "red"
                 
                 sort(i - 1)
-            },20);
+            }, speedOfSorting);
         }else{
             if(startingIndex < elementsOrdering.length - 2){
                 setTimeout(() => {
                     insertionSort(startingIndex + 1)
-                }, 20);
+                }, speedOfSorting);
             }else{
                 enableBtns()
         
