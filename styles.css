@@ -16,6 +16,7 @@ header{
     width: 70%;
     height: 70vh;
     margin: auto;
+    transition: 1s;
     position: relative;
 }
 
