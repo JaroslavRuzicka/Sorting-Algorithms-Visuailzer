@@ -1,17 +1,112 @@
+:root {
+    --border-color: brown;
+    --button-height: 6vmin;
+    --button-width: 10vw;
+    --number-input-width: 5vmin;
+    --background-color: rgb(25, 25, 25);
+    --font-size-regular: 2vmin;
+    --font-size-enlarged: 2.1vmin;
+}
+
 *{
     margin: 0px;
     padding: 0px;
     border: 0px;
 }
 
+body{
+    height: 100vh;
+    background-color: var(--background-color);
+}
+
 header{
-    margin: auto;
+    /* margin: auto; */
     text-align: center;
+
+}
+
+ul{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    list-style-type: none;
+    margin: 0 auto;
+    align-items: stretch;
+}
+
+li{
+    display: flex;
+    align-items: center;
 }
 
 
+#numberOfElementsInput{
+    width: var(--number-input-width);
+    height: var(--button-height);
+    text-align: center;
+    text-decoration: underline;
+    -moz-appearance: textfield;
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button 
+        {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+}
+
+
+
+
+.card{
+    /* width: var(--button-width); */
+    height: var(--button-height);
+    padding: 5px;
+    color: rgb(254, 239, 227);
+    background-color: var(--background-color);
+    font-weight: bold;
+    text-wrap: wrap; 
+    align-self: center;
+    cursor: pointer;
+    font-size: var(--font-size-regular);
+    border-right: 2px;
+	border-left: 0;
+	border-style: solid;
+    padding: .5vw;
+	border-image: linear-gradient(to bottom, #181818, #eee, #181818) 1 100%;
+
+
+}
+#sortingAlgorithmsSelection{
+    width: var(--button-width);
+    height: var(--button-height);
+    text-align: center;
+    text-decoration: underline;
+
+    /* border-left: 2px; */
+	border-style: solid;
+	/* border-image: linear-gradient(to bottom, #181818, #eee, #181818) 1 100%; */
+}
+
+
+.space{
+    width: 5vw;
+}
+
+.card:hover{
+    font-size: var(--font-size-enlarged);
+    transition: all 1s;
+    background: -webkit-linear-gradient(#f84417, #c55900);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+option{
+    background-color: var(--background-color);
+    border: 2px solid grey;
+}
+
 #algoBox{
-    background-color: aqua;
+    background-color: var(--background-color);
     display: block;
     width: 70%;
     height: 70vh;
@@ -22,19 +117,14 @@ header{
 
 #algoBox div{
     height: 60vh;
-    background-color: red;
     float: left;
     width: 2%;
     box-shadow: 0px 0px 0px 2px black inset;
     position: absolute;
-    
+    background: rgb(2,0,36);
+    background: linear-gradient( rgb(232, 93, 7) 35%, rgb(224, 19, 12) 100%);
+    /* background: linear-gradient( rgb(41, 241, 6) 35%, rgb(2, 239, 93) 100%); */
     bottom: 0;
     transition: left .1s;
 }
 
-button{
-    width: 150px;
-    height: 30px;
-    border: 1px solid black;
-    margin: 5px;
-}

@@ -12,7 +12,8 @@
 /*******************Global Variables **************************/
 let elementsOrdering = []
 let speedOfSorting = 20
-
+let backgroundColor = "linear-gradient( rgb(232, 93, 7) 35%, rgb(224, 19, 12) 100%)"
+let soritngBackgroundColor = "linear-gradient( rgb(41, 241, 6) 35%, rgb(2, 239, 93) 100%)"
 
 /*******************DOM Selectors *****************************/
 // let elements = document.getElementById("algoBox").childNodes
@@ -120,8 +121,8 @@ function selectionSort(startingIndex){
     function loop(i){
         let temp2 = elementsOrdering[i]
         
-        smallestElement.element.style.backgroundColor = "lime"
-        temp2.element.style.backgroundColor = "lime"
+        smallestElement.element.style.background = soritngBackgroundColor
+        temp2.element.style.background = soritngBackgroundColor
 
         setTimeout(function(){
             
@@ -129,13 +130,13 @@ function selectionSort(startingIndex){
             let height2 = getHeightOfElement(temp2)
 
             
-            temp2.element.style.backgroundColor = "red"
+            temp2.element.style.background = backgroundColor
             
             if(height1 > height2){
-                smallestElement.element.style.backgroundColor = "red"
+                smallestElement.element.style.background = backgroundColor
                 smallestElement = temp2
                 smallestElementPosition = i
-                smallestElement.element.style.backgroundColor = "lime"
+                smallestElement.element.style.background = soritngBackgroundColor
             }
 
             if(i < elementsOrdering.length - 1){
@@ -150,7 +151,7 @@ function selectionSort(startingIndex){
                 elementsOrdering[smallestElementPosition] = elementsOrdering[startingIndex]
                 elementsOrdering[startingIndex] = smallestElement
                 setTimeout(function(){
-                    smallestElement.element.style.backgroundColor = "red"
+                    smallestElement.element.style.background = backgroundColor
 
                 },speedOfSorting)
                if(startingIndex < elementsOrdering.length - 2){
@@ -158,8 +159,8 @@ function selectionSort(startingIndex){
                }else{
                     enableBtns()
                     setTimeout(function(){
-                        smallestElement.element.style.backgroundColor = "red"
-                        temp2.element.style.backgroundColor = "red"
+                        smallestElement.element.style.background = backgroundColor
+                        temp2.element.style.background = backgroundColor
                     },speedOfSorting)
                }
             }
@@ -178,16 +179,16 @@ function bubleSort(lengthOfLoop){
         let temp1 = elementsOrdering[i]
         let temp2 = elementsOrdering[i + 1]
         
-        temp1.element.style.backgroundColor = "lime"
-        temp2.element.style.backgroundColor = "lime"
+        temp1.element.style.background = soritngBackgroundColor
+        temp2.element.style.background = soritngBackgroundColor
 
         setTimeout( function() {
 
             let height1 = getHeightOfElement(temp1)
             let height2 = getHeightOfElement(temp2)
 
-            temp1.element.style.backgroundColor = "red"
-            temp2.element.style.backgroundColor = "red"
+            temp1.element.style.background = backgroundColor
+            temp2.element.style.background = backgroundColor
             if(height1 > height2){
                 let left1 = temp1.element.style.left
                 let left2 = temp2.element.style.left
@@ -226,7 +227,7 @@ function insertionSort(startingIndex){
 
     function sort(i){
         let prev = elementsOrdering[i]
-        prev.element.style.backgroundColor = "lime"
+        prev.element.style.background = soritngBackgroundColor
 
         let prevHeight = getHeightOfElement(prev)
         if(prevHeight > tempHeight){
@@ -240,7 +241,7 @@ function insertionSort(startingIndex){
             elementsOrdering[i + 1] = temp
             elementsOrdering[i + 1].element.style.left = `${100 / elementsOrdering.length * (i + 1)}%`
             setTimeout(() => {
-                prev.element.style.backgroundColor = "red"
+                prev.element.style.background = backgroundColor
             }, speedOfSorting);
 
             if(startingIndex < elementsOrdering.length - 2){
@@ -253,14 +254,14 @@ function insertionSort(startingIndex){
             return
         }
         if(i == 0){
-            prev.element.style.backgroundColor = "red"
+            prev.element.style.background = backgroundColor
             elementsOrdering[i] = temp
             elementsOrdering[i].element.style.left = `${100 / elementsOrdering.length * (i)}%`
         }
         
         if(i > 0){
             setTimeout(() => {
-                prev.element.style.backgroundColor = "red"
+                prev.element.style.background = backgroundColor
                 
                 sort(i - 1)
             }, speedOfSorting);
@@ -408,19 +409,22 @@ function mergeSort(){
     }
 
     sort(elementsOrdering)
-    enableBtns()
+    
 
     console.log(sortingVisualizationOrder)
 
     function sortArrayWithDelayAnimation(index){
         let length = sortingVisualizationOrder.length
 
-        if(index >= length) return
+        if(index >= length){
+            enableBtns()
+            return
+        } 
 
         let currentArray = sortingVisualizationOrder[index]
 
         currentArray.forEach((element)=>{
-            element.item.element.style.backgroundColor = "lime"
+            element.item.element.style.background = soritngBackgroundColor
         })
         
         loopWithDelay(currentArray)
@@ -428,11 +432,12 @@ function mergeSort(){
 
         setTimeout(() => {
             currentArray.forEach((element)=>{
-                element.item.element.style.backgroundColor = "red"
+                element.item.element.style.background = backgroundColor
             })   
             sortArrayWithDelayAnimation(index + 1)
         }, speedOfSorting * 10);
 
+        
     }
     
     function loopWithDelay(array){
@@ -488,23 +493,6 @@ function getHeightOfElement(elementHeight){
     return Number(elementHeight.height.slice(0, -2))
 }
 
-function swapScenes(){
-    let firstScene = document.querySelector("#algoBox")
-    let secondScene = document.querySelector("#treeBox")
-
-    // if(firstScene.style.display == "none"){
-    if(firstScene.style.opacity < 1){
-        // firstScene.style.display = "block"
-        firstScene.style.opacity = 1
-        secondScene.style.display = "none"
-
-        
-    }else{
-        // firstScene.style.display = "none"
-        firstScene.style.opacity = 0
-        secondScene.style.display = "block"
-    }
-}
 
 //*******************Funciton Calls *******************************/
 populateSortingBox()
@@ -522,6 +510,5 @@ shuffleBtn.addEventListener("click", shuffleElements)
 let generateElementsBtn = document.querySelector("#changeNumberOfElementsBtn")
 generateElementsBtn.addEventListener("click", populateSortingBox)
 
-let changeScenesBtn = document.querySelector("#swapScenesBtn")
-changeScenesBtn.addEventListener("click", swapScenes)
+addEventListener("resize", shuffleElements);
 

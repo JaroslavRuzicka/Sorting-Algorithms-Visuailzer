@@ -10,24 +10,24 @@
     <header>
         <ul>
             <li>
+                <button class="card" id="sortBtn">Let the sorting comence</button>
                 <label for="sortingAlgorithms"></label>
-                <select name="sortingAlgorithms" id="sortingAlgorithmsSelection">
+                <select class="card" name="sortingAlgorithms" id="sortingAlgorithmsSelection">
                     <option value="bubbleSort">Bubble Sort</option>
                     <option value="selectionSort">Selection Sort</option>
                     <option value="insertionSort">Insertion Sort</option>
                     <option value="mergeSort">Merge Sort</option>
                 </select>
-                <button id="sortBtn">Let the sorting comence</button>
             </li>
-            <li><button id="shuffleBtn">Shuffle me timbers</button></li>
+            <li><div class="card space"></div></li>
+            <li><button class="card" id="shuffleBtn">Shuffle elements</button></li>
+            <li><div class="card space"></div></li>
             <li>
-                <div>
-                    <button id="changeNumberOfElementsBtn">Change the number of elements</button>
-                    <input type="number" name="" id="numberOfElementsInput" value="20">
-                </div>
+                <button class="card" id="changeNumberOfElementsBtn">Change number of elements</button>
             </li>
-            <button id="swapScenesBtn">Tree sorting stuff</button>
-            <li></li>
+            <li>
+                <input class="card" type="number" name="" id="numberOfElementsInput" value="20">
+            </li>
         </ul>
     </header>
     <div id="algoBox"></div>
