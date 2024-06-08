@@ -3,17 +3,18 @@
 //Insertion sort: Done
 //Selection sort: Done
 //Merge sort: Done
-//Quick Sort
-//Heap sort
-//Radix sort
+//Quick Sort: Done
+//Heap sort: TBA
+//Radix sort: TBA
 //Shell sort -- maybe
 //Bogo sort -- maybe
 
 /*******************Global Variables **************************/
 let elementsOrdering = []
-let speedOfSorting = 20
+let speedOfSorting = 1
 let backgroundColor = "linear-gradient( rgb(232, 93, 7) 35%, rgb(224, 19, 12) 100%)"
 let soritngBackgroundColor = "linear-gradient( rgb(41, 241, 6) 35%, rgb(2, 239, 93) 100%)"
+let disabledBackgroundColor = "-webkit-linear-gradient(rgb(1, 5, 0) 35%, rgb(196, 198, 197) 100%)"
 
 /*******************DOM Selectors *****************************/
 // let elements = document.getElementById("algoBox").childNodes
@@ -21,10 +22,6 @@ let elements = document.getElementById("algoBox").children
 let parentElement = document.getElementById("algoBox")
 
 /*******************Functions  *******************************/
-
-
-//shuffle while soritng breaks algo
-
 
 function populateSortingBox(){
     let tempNumber = Number(document.querySelector("#numberOfElementsInput").value)
@@ -89,7 +86,6 @@ function shuffledArray(numOfElements) {
 }
 
 function shuffleElements(){
-    
     elementsOrdering = []
     let numberOfChildren = elements.length
     let spacing = 100 / numberOfChildren
@@ -111,9 +107,6 @@ function shuffleElements(){
 }
 
 function selectionSort(startingIndex){
-    // shuffleBtn.disabled = true
-    // generateElementsBtn.disabled = true
-
     i = startingIndex
     let smallestElement = elementsOrdering[i]
     let smallestElementPosition = i
@@ -128,7 +121,6 @@ function selectionSort(startingIndex){
             
             let height1 = getHeightOfElement(smallestElement)
             let height2 = getHeightOfElement(temp2)
-
             
             temp2.element.style.background = backgroundColor
             
@@ -148,12 +140,17 @@ function selectionSort(startingIndex){
                 smallestElement.element.style.left = left2
                 elementsOrdering[startingIndex].element.style.left = left1
 
+                smallestElement.left = left2
+                elementsOrdering[startingIndex].left = left1
+
                 elementsOrdering[smallestElementPosition] = elementsOrdering[startingIndex]
                 elementsOrdering[startingIndex] = smallestElement
+
                 setTimeout(function(){
                     smallestElement.element.style.background = backgroundColor
 
                 },speedOfSorting)
+
                if(startingIndex < elementsOrdering.length - 2){
                    selectionSort(startingIndex + 1)
                }else{
@@ -196,6 +193,9 @@ function bubleSort(lengthOfLoop){
                 elementsOrdering[i].element.style.left = left2
                 elementsOrdering[i + 1].element.style.left = left1
 
+                elementsOrdering[i].left = left2
+                elementsOrdering[i + 1].left = left1
+
                 elementsOrdering[i] = temp2
                 elementsOrdering[i + 1] = temp1
                 //console.log(elementsOrdering);
@@ -236,10 +236,12 @@ function insertionSort(startingIndex){
     
             elementsOrdering[i + 1] = prev
             elementsOrdering[i + 1].element.style.left = `${100 / elementsOrdering.length * (i + 1)}%`
+            elementsOrdering[i + 1].left = `${100 / elementsOrdering.length * (i + 1)}%`
         }
         else{
             elementsOrdering[i + 1] = temp
             elementsOrdering[i + 1].element.style.left = `${100 / elementsOrdering.length * (i + 1)}%`
+            elementsOrdering[i + 1].left = `${100 / elementsOrdering.length * (i + 1)}%`
             setTimeout(() => {
                 prev.element.style.background = backgroundColor
             }, speedOfSorting);
@@ -257,6 +259,7 @@ function insertionSort(startingIndex){
             prev.element.style.background = backgroundColor
             elementsOrdering[i] = temp
             elementsOrdering[i].element.style.left = `${100 / elementsOrdering.length * (i)}%`
+            elementsOrdering[i].left = `${100 / elementsOrdering.length * (i)}%`
         }
         
         if(i > 0){
@@ -279,17 +282,14 @@ function insertionSort(startingIndex){
 }
 
 function mergeSort(){
-
     let sortingVisualizationOrder = []
     
     function sort(previousArray){
-        
         let length = previousArray.length
 
         if(length <= 1) return
 
         let middleIndex = parseInt(length/2)
-
         let fistArray = []
         let secondArray = []
 
@@ -306,17 +306,12 @@ function mergeSort(){
             }
         }
 
-
         sort(fistArray)
         sort(secondArray)
         merge(fistArray, secondArray, previousArray)
-        
     }
 
-
-
     function merge(firstArray, secondArray, previousArray){
-        
         let sortingVisualizationOrderTemp = []
         
         let length = previousArray.length
@@ -333,16 +328,6 @@ function mergeSort(){
             leftLIst.push(left)
         })
 
-        // firstArray.forEach(element => {
-        //     left = element.left
-        //     leftLIst.push(left)
-        // })
-
-        // secondArray.forEach(element => {
-        //     left = element.left
-        //     leftLIst.push(left)
-        // })
-
         while(l < firstSize && r < secondSize) {
             let fistHeight = getHeightOfElement(firstArray[l])
             let secondHeight = getHeightOfElement(secondArray[r])
@@ -358,7 +343,6 @@ function mergeSort(){
                 }
 
                 sortingVisualizationOrderTemp.push(tempItem)
-                // previousArray[i].element.style.left = tempLeft
                 i++
                 l++
             }
@@ -372,7 +356,6 @@ function mergeSort(){
                 }
 
                 sortingVisualizationOrderTemp.push(tempItem)
-                // previousArray[i].element.style.left = tempLeft
                 i++
                 r++
             }
@@ -409,9 +392,17 @@ function mergeSort(){
     }
 
     sort(elementsOrdering)
-    
-
     console.log(sortingVisualizationOrder)
+    
+    function adjustedSpeedOfSorting(){
+        if(speedOfSorting > 20){
+            return 20
+        } else{
+            return speedOfSorting
+        }
+    }
+
+    let speed =  adjustedSpeedOfSorting()
 
     function sortArrayWithDelayAnimation(index){
         let length = sortingVisualizationOrder.length
@@ -429,15 +420,12 @@ function mergeSort(){
         
         loopWithDelay(currentArray)
 
-
         setTimeout(() => {
             currentArray.forEach((element)=>{
                 element.item.element.style.background = backgroundColor
             })   
             sortArrayWithDelayAnimation(index + 1)
-        }, speedOfSorting * 10);
-
-        
+        }, speed * 50);
     }
     
     function loopWithDelay(array){
@@ -445,19 +433,103 @@ function mergeSort(){
         array.forEach(element => {
             //console.log(element.item.element)    
             element.item.element.style.left = element.left
- 
         })
     }
-
-
     sortArrayWithDelayAnimation(0)
-
 }
 
+function quickSort(){
+    let orderOfOperations = []
+        
+    const endIndex = elementsOrdering.length
+    function sort(array, startIndex, endIndex){
+    
+        let arrayLength = endIndex - startIndex
+        
+        if (arrayLength <= 1) return
+
+        let pivot = array[endIndex - 1]
+        let pivotHeight = getHeightOfElement(pivot)
+
+        let j = startIndex
+        let i = startIndex - 1
+
+        for(; j < endIndex; j++){
+            let tempHeight = getHeightOfElement(array[j])
+            
+            if(tempHeight < pivotHeight || j === endIndex - 1){
+                i++
+                let jElement = array[j]
+                let iElement = array[i]
+                let jLeft = array[j].left
+                let iLeft = array[i].left
+
+                array[j] = iElement
+                array[j].left = jLeft
+                
+                array[i] = jElement
+                array[i].left = iLeft
+
+                let temp ={
+                    element2: iElement,
+                    element2Left: iLeft,
+                    element1: jElement,
+                    element1Left: jLeft
+                }
+
+                orderOfOperations.push(temp)
+            }
+        }
+        sort(array, startIndex, i )   
+        sort(array, i + 1, endIndex)
+    }
+
+    function adjustedSpeedOfSorting(){
+        if(speedOfSorting > 15){
+            return 15
+        } else{
+            return speedOfSorting
+        }
+    }
+
+    let speed =  adjustedSpeedOfSorting()
+    function sortVisualization(index){
+            
+        if(index === orderOfOperations.length) return
+
+        let element1 = orderOfOperations[index].element1
+        let element2 = orderOfOperations[index].element2
+
+        element1.element.style.background = soritngBackgroundColor
+        element2.element.style.background = soritngBackgroundColor
+
+        element1.element.style.left = orderOfOperations[index].element2Left
+        element2.element.style.left = orderOfOperations[index].element1Left
+
+        //console.log(element1.element);    
+        setTimeout(() => {
+            element1.element.style.background = backgroundColor
+            element2.element.style.background = backgroundColor
+            sortVisualization(index + 1)
+        }, speed * 50);
+    }
+
+    sort(elementsOrdering, 0, endIndex)
+    enableBtns()
+
+    console.log(orderOfOperations);
+    sortVisualization(0)
+}
+
+function adjustSpeedOfSorting(sortSelector){
+    speedOfSorting = 50 / parseInt(sortSelector.value)
+}
 
 function callSortingAlgorithm(){
     let selection = document.querySelector("#sortingAlgorithmsSelection").value
     disabledBtns()
+    adjustSpeedOfSorting(sortingRange)
+    
     switch (selection){
         case "bubbleSort":
             let tempNumber = Number(document.querySelector("#numberOfElementsInput").value)    
@@ -472,21 +544,30 @@ function callSortingAlgorithm(){
         case "mergeSort":
             mergeSort()
             break
+        case "quickSort":
+            quickSort()
+            break
         default:
             break
     }
 }
 
 function disabledBtns(){
-    btn.disabled = true
+    sortBtn.disabled = true
     shuffleBtn.disabled = true
     generateElementsBtn.disabled = true
+
+    shuffleBtn.style.color = "grey"
+    generateElementsBtn.style.color = "grey"
 }
 
 function enableBtns(){
     generateElementsBtn.disabled = false
     shuffleBtn.disabled = false 
-    btn.disabled = false
+    sortBtn.disabled = false
+
+    shuffleBtn.style.color = "white"
+    generateElementsBtn.style.color = "white"
 }
 
 function getHeightOfElement(elementHeight){
@@ -497,18 +578,19 @@ function getHeightOfElement(elementHeight){
 //*******************Funciton Calls *******************************/
 populateSortingBox()
 
-
 /**********************Event Listeners ***************************/
 let tempNumber = Number(document.querySelector("#numberOfElementsInput").value)    
 
-let btn = document.querySelector("#sortBtn")
-btn.addEventListener("click", callSortingAlgorithm)
+let sortBtn = document.querySelector("#sortBtn")
+sortBtn.addEventListener("click", callSortingAlgorithm)
 
 let shuffleBtn = document.querySelector("#shuffleBtn")
 shuffleBtn.addEventListener("click", shuffleElements)
 
 let generateElementsBtn = document.querySelector("#changeNumberOfElementsBtn")
 generateElementsBtn.addEventListener("click", populateSortingBox)
+
+let sortingRange = document.querySelector(".slider")
 
 addEventListener("resize", shuffleElements);
 

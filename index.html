@@ -10,13 +10,14 @@
     <header>
         <ul>
             <li>
-                <button class="card" id="sortBtn">Let the sorting comence</button>
+                <button class="card" id="sortBtn">Let the sorting commence</button>
                 <label for="sortingAlgorithms"></label>
                 <select class="card" name="sortingAlgorithms" id="sortingAlgorithmsSelection">
                     <option value="bubbleSort">Bubble Sort</option>
                     <option value="selectionSort">Selection Sort</option>
                     <option value="insertionSort">Insertion Sort</option>
                     <option value="mergeSort">Merge Sort</option>
+                    <option value="quickSort">Quick Sort</option>
                 </select>
             </li>
             <li><div class="card space"></div></li>
@@ -28,10 +29,15 @@
             <li>
                 <input class="card" type="number" name="" id="numberOfElementsInput" value="20">
             </li>
+
         </ul>
     </header>
     <div id="algoBox"></div>
     <div id="treeBox"></div>
+    <div class="slidecontainer">
+        <input type="range" min="1" max="50" value="25" class="slider" id="myRange">
+        <p>Sorting speed</p>
+      </div>
 </body>
 <script src="./index.js"></script>
 </html>
