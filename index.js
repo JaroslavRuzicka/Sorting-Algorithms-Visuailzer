@@ -1,13 +1,4 @@
-//Sorting algorithms to implement:
-//Buble sort: Done
-//Insertion sort: Done
-//Selection sort: Done
-//Merge sort: Done
-//Quick Sort: Done
-//Heap sort: TBA
-//Radix sort: TBA
-//Shell sort -- maybe
-//Bogo sort -- maybe
+
 
 /*******************Global Variables **************************/
 let elementsOrdering = []
